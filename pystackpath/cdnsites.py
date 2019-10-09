@@ -43,16 +43,18 @@ class CdnSites(BaseObject):
             if not value in purgeSelectors:
                 raise ValueError(f"{value} is not a valid purgeSelector: {purgeSelectors}")
 
-        data = {"items": [
-            {
-                "url" : url,
-                "recursive" : recursive,
-                "headers" : headers,
-                "invalidateOnly" : invalidateOnly,
-                "purgeSelector" : purgeSelector
-                    }
-                ]
-            }
+        data = {
+            "items": [
+                {
+                    "url" : url,
+                    "recursive" : recursive,
+                    "headers" : headers,
+                    "invalidateOnly" : invalidateOnly,
+                    "purgeSelector" : purgeSelector
+                }
+            ]
+        }
+        
         response = self._client.post("/cdn/v1/stacks/{}/purge".format(self._parent_id), json = data)
         response.raise_for_status()
 
