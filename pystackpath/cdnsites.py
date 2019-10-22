@@ -60,15 +60,9 @@ class CdnSites(BaseObject):
 
         return self.loaddict(response.json())
 
-    def purge_status(self, purge_response = None, purge_id = None):
-
-
-        if purge_response:
-            purge_id = getattr(purge_response, "id")
-
-        if not purge_id:
-            raise ValueError("No purge_id provided.")
+    def purge_status(self, purge_id):
 
         response = self._client.get(f"/cdn/v1/stacks/{self._parent_id}/purge/{purge_id}")
+        response.raise_for_status()
 
         return self.loaddict(response.json())
