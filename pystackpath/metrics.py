@@ -17,6 +17,10 @@ class Metrics(BaseObject):
 
         start_date_iso = api_time_format(start_datetime_object)
         end_date_iso = api_time_format(end_datetime_object)
+
+        if start_datetime_object > end_datetime_object:
+            raise ValueError(f"Search start date, \"{start_date_iso}\", is later than end date, \"{end_date_iso}\"!")
+
         platforms_string = ','.join(platforms)
         response = self._client.get(f"/cdn/v1/stacks/{self._parent_id}/metrics?start_date={start_date_iso}&end_date={end_date_iso}&platforms={platforms_string}&granularity={granularity}")
         response.raise_for_status()
