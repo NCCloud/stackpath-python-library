@@ -107,5 +107,6 @@ metrics_response1 = sd.stacks().get(stackid).metrics().get()
 from datetime import datetime, timedelta
 end = datetime.today()
 start = end - timedelta(days=7)
-metrics_response2 = sd.stacks().get(stackid).metrics().get(granularity="PT1H", platforms = ["CDO", "CDE"], start_datetime_object = start, end_datetime_object = end)
+metrics_response2 = sd.stacks().get(stackid).metrics().get(granularity="PT1H",\
+  platforms = ["CDO", "CDE"], start_datetime_object = start, end_datetime_object = end)
 ```
