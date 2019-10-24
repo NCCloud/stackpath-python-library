@@ -6,6 +6,12 @@
 -->
 
 **Did you labeled this PR?**
+<!--
+Add the correct label to PR. Choose between:
+- enhancement
+- bug
+- documentation
+-->
 > Uncomment response
 >
 > YES
