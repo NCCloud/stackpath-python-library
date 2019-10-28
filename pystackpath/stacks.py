@@ -1,5 +1,4 @@
 from .util import BaseObject, PageInfo, pagination_query
-from.cdnsites import CdnSites
 from .cdnsites import CdnSites
 from .metrics import Metrics
 from .certificates import Certificates
