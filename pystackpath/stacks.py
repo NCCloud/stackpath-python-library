@@ -1,6 +1,9 @@
 from .util import BaseObject, PageInfo, pagination_query
 from.cdnsites import CdnSites
 from .cdnsites import CdnSites
+from .metrics import Metrics
+from .certificates import Certificates
+
 
 
 class Stacks(BaseObject):
@@ -63,3 +66,7 @@ class Stacks(BaseObject):
         return CdnSites(self._client, self.id)
 
     def metrics(self):
+        return Metrics(self._client, self.id)
+
+    def certificates(self):
+        return Certificates(self._client, self.id)
