@@ -30,7 +30,7 @@ class Certificates(BaseObject):
             response = self._client.post(f"/cdn/v1/stacks/{self._parent_id}/certificates", json = data)
             response.raise_for_status()
 
-            return self.loaddict(response.json()["certifcate"])
+            return self.loaddict(response.json()["certificate"])
 
         def delete(self, certificate_id):
 
@@ -42,7 +42,7 @@ class Certificates(BaseObject):
         def update(self, certificate_id, certificate_string = None, key_string = None, ca_bundle_string = None):
 
             data = {
-                "certifcate" : certificate_string,
+                "certificate" : certificate_string,
                 "key" : key_string,
                 "caBundle" : ca_bundle_string
             }
@@ -51,7 +51,7 @@ class Certificates(BaseObject):
                 json = data )
             response.raise_for_status()
 
-            return self.loaddict(response.json()["certifcate"])
+            return self.loaddict(response.json()["certificate"])
 
         def renew(self, certificate_id):
 
