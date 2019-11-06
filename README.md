@@ -124,12 +124,12 @@ certificate_response = sp.stacks().get(stackid).certificates()
 ```python
 ##The cert and key are required, CA bundle is optional.
 new_cert_response = sp.stacks().get(stackid).certificates().add(\
-SERVER_CERTIFICATE_STRING, PRIVATE_KEY, CA_BUNDLE_STRING)
+SERVER_CERTIFICATE_STRING, PRIVATE_KEY_STRING, CA_BUNDLE_STRING)
 ##The new cert ID can be retrieved from the returned object:
 cert_id = new_cert_response.id
 
 ##To update a cert:
-sp.stacks().get(stackid).certificates().update(cert_id, UPDATED_CERT_STRING, UPDATED_CA_STRING)
+sp.stacks().get(stackid).certificates().update(cert_id, UPDATED_CERT_STRING, UPDATED_KEY_STRING)
 
 ##To delete a cert:
 delete_cert_response = sp.stacks().get(stackid).certificates().delete(cert_id)
