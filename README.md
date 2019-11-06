@@ -120,7 +120,7 @@ certificate_response = sp.stacks().get(stackid).certificates()
  second_certificate = certificate_response['results'][1]
 ```
 
-##Add, update and delete a certificate for a stack:
+## Add, update and delete a certificate for a stack:
 ```python
 ##The cert and key are required, CA bundle is optional.
 new_cert_response = sp.stacks().get(stackid).certificates().add(\
@@ -133,6 +133,4 @@ sp.stacks().get(stackid).certificates().update(cert_id, UPDATED_CERT_STRING, UPD
 
 ##To delete a cert:
 delete_cert_response = sp.stacks().get(stackid).certificates().delete(cert_id)
-
-
 ```
