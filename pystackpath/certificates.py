@@ -28,7 +28,7 @@ class Certificates(BaseObject):
             }
 
             response = self._client.post(f"/cdn/v1/stacks/{self._parent_id}/certificates", json = data)
-            ##response.raise_for_status()
+            response.raise_for_status()
 
             return self.loaddict(response.json()["certifcate"])
 
