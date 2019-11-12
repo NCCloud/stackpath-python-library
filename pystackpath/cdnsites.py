@@ -60,7 +60,7 @@ class CdnSites(BaseObject):
     def disable(self):
         """
         Disable a CDN site
-        :return: a stackpath site object with the deleted cdn site
+        :return: a stackpath site object with the disabled cdn site
         """
         response = self._client.post("/cdn/v1/stacks/{}/sites/{}/disable".format(self._parent_id, self.id))
         response.raise_for_status()
@@ -69,7 +69,7 @@ class CdnSites(BaseObject):
     def enable(self):
         """
         Enable a CDN site
-        :return: a stackpath site object with the deleted cdn site
+        :return: a stackpath site object with the enabled cdn site
         """
         response = self._client.post("/cdn/v1/stacks/{}/sites/{}/enable".format(self._parent_id, self.id))
         response.raise_for_status()
