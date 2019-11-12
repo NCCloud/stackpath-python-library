@@ -4,7 +4,6 @@ from .metrics import Metrics
 from .certificates import Certificates
 
 
-
 class Stacks(BaseObject):
     def index(self, first="", after="", filter="", sort_by=""):
         pagination = pagination_query(first=first, after=after, filter=filter, sort_by=sort_by)
