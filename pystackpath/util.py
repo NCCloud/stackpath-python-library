@@ -57,5 +57,6 @@ def pagination_query(first="", after="", filter="", sort_by=""):
 
     return params
 
+
 def api_time_format(datetime_object):
     return datetime_object.strftime("%Y-%m-%dT%H:%M:%SZ")
