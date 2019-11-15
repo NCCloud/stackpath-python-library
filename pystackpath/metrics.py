@@ -5,7 +5,7 @@ from datetime import timedelta
 
 class Metrics(BaseObject):
 
-    def get(self, start_date: dt = dt.today() - timedelta(days=1), end_date: dt = dt.today(), granularity="P1D",
+    def get(self, start_date: dt = dt.today() - timedelta(days=1), end_date: dt = dt.today(), granularity="AUTO",
             platforms=["CDE"], pops=[], billing_regions=[], sites=[], group_by="NONE", site_type_filter="ALL"):
 
         available_granularity_options = ["PT5M", "PT1H", "P1D", "P1M"]
