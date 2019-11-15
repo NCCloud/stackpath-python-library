@@ -9,8 +9,7 @@ class PageInfo(object):
                  hasPreviousPage=False,
                  hasNextPage="",
                  startCursor="",
-                 endCursor=""
-    ):
+                 endCursor=""):
         self.totalCount = totalCount
         self.hasPreviousPage = hasPreviousPage
         self.hasNextPage = hasNextPage
