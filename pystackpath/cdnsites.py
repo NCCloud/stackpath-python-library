@@ -1,8 +1,7 @@
-from .deliverysites import DeliverySites
-from .util import PageInfo, pagination_query
+from .util import BaseSite, PageInfo, pagination_query
 
 
-class CdnSites(DeliverySites):
+class CdnSites(BaseSite):
     base_api = "/cdn"
 
     def index(self, first="", after="", filter="", sort_by=""):

@@ -1,7 +1,7 @@
-from .util import BaseObject, PageInfo, pagination_query
+from .util import BaseSite, PageInfo, pagination_query
 
 
-class DeliverySites(BaseObject):
+class DeliverySites(BaseSite):
     base_api = "/delivery"
 
     def index(self, first="", after="", filter="", sort_by=""):
