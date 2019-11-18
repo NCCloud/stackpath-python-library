@@ -1,4 +1,4 @@
-from .util import BaseSite, PageInfo, pagination_query
+from .util import BaseSite
 
 
 class DeliverySites(BaseSite):
