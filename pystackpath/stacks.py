@@ -1,5 +1,6 @@
 from .util import BaseObject, PageInfo, pagination_query
 from .cdnsites import CdnSites
+from .deliverysites import DeliverySites
 from .metrics import Metrics
 from .certificates import Certificates
 
@@ -85,6 +86,9 @@ class Stacks(BaseObject):
         response.raise_for_status()
 
         return response.json()["progress"]
+
+    def deliverysites(self):
+        return DeliverySites(self._client, self.id)
 
     def cdnsites(self):
         return CdnSites(self._client, self.id)
