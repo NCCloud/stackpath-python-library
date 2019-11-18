@@ -1,8 +1,8 @@
-from .util import BaseObject, PageInfo, pagination_query
-from .cdnsites import CdnSites
-from .deliverysites import DeliverySites
-from .metrics import Metrics
-from .certificates import Certificates
+from pystackpath.util import BaseObject, PageInfo, pagination_query
+from pystackpath.stacks.cdnsites import CdnSites
+from pystackpath.stacks.deliverysites import DeliverySites
+from pystackpath.stacks.metrics import Metrics
+from pystackpath.stacks.certificates import Certificates
 
 
 class Stacks(BaseObject):
@@ -88,13 +88,13 @@ class Stacks(BaseObject):
         return response.json()["progress"]
 
     def deliverysites(self):
-        return DeliverySites(self._client, self.id)
+        return DeliverySites(self._client, f"/delivery/v1/stacks/{self.id}")
 
     def cdnsites(self):
-        return CdnSites(self._client, self.id)
+        return CdnSites(self._client, f"/cdn/v1/stacks/{self.id}")
 
     def metrics(self):
-        return Metrics(self._client, self.id)
+        return Metrics(self._client, f"/cdn/v1/stacks/{self.id}")
 
     def certificates(self):
-        return Certificates(self._client, self.id)
+        return Certificates(self._client, f"/cdn/v1/stacks/{self.id}")

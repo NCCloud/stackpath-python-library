@@ -1,4 +1,4 @@
-from .util import BaseObject, api_time_format
+from pystackpath.util import BaseObject, api_time_format
 from datetime import datetime as dt
 from datetime import timedelta
 

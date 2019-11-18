@@ -1,9 +1,8 @@
-from .util import BaseSite
+from pystackpath.util import BaseSite
+from pystackpath.stacks.deliverysites.delivery_domain import DeliveryDomains
 
 
 class DeliverySites(BaseSite):
-    base_api = "/delivery"
-
     def index(self, first="", after="", filter="", sort_by=""):
         return super(DeliverySites, self).index(first="", after="", filter="", sort_by="")
 
@@ -87,3 +86,6 @@ class DeliverySites(BaseSite):
         response = self._client.post(f"{self._base_api}/sites/{self.id}/scripting")
         response.raise_for_status()
         return self
+
+    def delivery_domains(self):
+        return DeliveryDomains(self._client, f"{self._base_api}/sites/{self.id}")

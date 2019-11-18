@@ -21,9 +21,9 @@ class BaseObject(object):
     _client = None
     _base_api = ""
 
-    def __init__(self, client, parent_id=0):
-        self._client = client
-        self._parent_id = parent_id
+    def __init__(self, client, parent_path: str = ""):
+        super(BaseSite, self).__init__(client, parent_id)
+        self._base_api = parent_path
 
     @classmethod
     def newinstance(cls, client, parent_id=0):
@@ -45,10 +45,6 @@ class BaseObject(object):
 
 
 class BaseSite(BaseObject):
-    def __init__(self, client, parent_id=0):
-        super(BaseSite, self).__init__(client, parent_id)
-        self._base_api = f"/delivery/v1/stacks/{parent_id}"
-
     def index(self, first="", after="", filter="", sort_by=""):
         pagination = pagination_query(first=first, after=after, filter=filter, sort_by=sort_by)
         response = self._client.get(f"{self._base_api}/sites", params=pagination)

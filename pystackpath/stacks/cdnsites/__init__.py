@@ -1,9 +1,7 @@
-from .util import BaseSite, PageInfo, pagination_query
+from pystackpath.util import BaseSite
 
 
 class CdnSites(BaseSite):
-    _base_api = "/cdn"
-
     def index(self, first="", after="", filter="", sort_by=""):
         return super(CdnSites, self).index(first="", after="", filter="", sort_by="")
 
