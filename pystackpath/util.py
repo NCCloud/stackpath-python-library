@@ -21,17 +21,17 @@ class BaseObject(object):
     _client = None
     _base_api = ""
 
-    def __init__(self, client, parent_path: str = ""):
+    def __init__(self, client, base_api: str = ""):
         self._client = client
-        self._base_api = parent_path
+        self._base_api = base_api
 
     @classmethod
-    def newinstance(cls, client, parent_id=0):
-        instance = cls(client, parent_id)
+    def newinstance(cls, client, base_api: str = ""):
+        instance = cls(client, base_api)
         return instance
 
     def loaddict(self, d):
-        instance = self.newinstance(self._client, self._parent_id)
+        instance = self.newinstance(self._client, self._base_api)
         for key, value in d.items():
             setattr(instance, key, value)
         return instance
