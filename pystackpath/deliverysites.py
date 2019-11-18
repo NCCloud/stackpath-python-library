@@ -5,20 +5,10 @@ class DeliverySites(BaseSite):
     base_api = "/delivery"
 
     def index(self, first="", after="", filter="", sort_by=""):
-        pagination = pagination_query(first=first, after=after, filter=filter, sort_by=sort_by)
-        response = self._client.get("{}/v1/stacks/{}/sites".format(self.base_api, self._parent_id), params=pagination)
-        response.raise_for_status()
-        items = []
-        for item in response.json()["results"]:
-            items.append(self.loaddict(item))
-        pageinfo = PageInfo(**response.json()["pageInfo"])
-
-        return {"results": items, "pageinfo": pageinfo}
+        return super(DeliverySites, self).index(first="", after="", filter="", sort_by="")
 
     def get(self, site_id):
-        response = self._client.get("{}/v1/stacks/{}/sites/{}".format(self.base_api, self._parent_id, site_id))
-        response.raise_for_status()
-        return self.loaddict(response.json()["site"])
+        return super(DeliverySites, self).get(site_id)
 
     def create(self, **payload):
         """
@@ -35,21 +25,14 @@ class DeliverySites(BaseSite):
         List	features   A CDN site's associated features.
                            Features control how StackPath provisions and configures a site.
         """
-        response = self._client.post(
-            "{}/v1/stacks/{}/sites".format(self.base_api, self._parent_id),
-            json=payload
-        )
-        response.raise_for_status()
-        return self.loaddict(response.json()["site"])
+        return super(DeliverySites, self).create(**payload)
 
     def delete(self):
         """
-        Delete a CDN site
+        Delete a site
         :return: a stackpath site object with the deleted cdn site
         """
-        response = self._client.delete("{}/v1/stacks/{}/sites/{}".format(self.base_api, self._parent_id, self.id))
-        response.raise_for_status()
-        return self
+        return super(DeliverySites, self).delete()
 
     def disable_cdn(self):
         """
@@ -98,7 +81,7 @@ class DeliverySites(BaseSite):
 
     def enable_scripting(self):
         """
-        Enable a SCRIPTION site
+        Enable a SCRIPTING site
         :return: a stackpath site object with the enabled scripting site
         """
         response = self._client.post("{}/v1/stacks/{}/sites/{}/scripting".format(self.base_api, self._parent_id, self.id))
