@@ -6,10 +6,10 @@ class CdnSites(DeliverySites):
     base_api = "/cdn"
 
     def index(self, first="", after="", filter="", sort_by=""):
-        return super().index(first="", after="", filter="", sort_by="")
+        return super(CdnSites, self).index(first="", after="", filter="", sort_by="")
 
     def get(self, site_id):
-        return super().get(site_id)
+        return super(CdnSites, self).get(site_id)
 
     def create(self, **payload):
         """
@@ -34,14 +34,14 @@ class CdnSites(DeliverySites):
                            API: A site is an API delivery site. API delivery sites are powered by both the WAF and CDN
                                 and have custom rulesets for each.
         """
-        return super().create(**payload)
+        return super(CdnSites, self).create(**payload)
 
     def delete(self):
         """
         Delete a CDN site
         :return: a stackpath site object with the deleted cdn site
         """
-        return super().delete()
+        return super(CdnSites, self).delete()
 
     def disable(self):
         """
