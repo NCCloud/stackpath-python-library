@@ -51,20 +51,56 @@ class DeliverySites(BaseObject):
         response.raise_for_status()
         return self
 
-    def disable(self):
+    def disable_cdn(self):
         """
         Disable a CDN site
         :return: a stackpath site object with the disabled cdn site
         """
-        response = self._client.post("{}/v1/stacks/{}/sites/{}/disable".format(self.base_api, self._parent_id, self.id))
+        response = self._client.delete("{}/v1/stacks/{}/sites/{}/cdn".format(self.base_api, self._parent_id, self.id))
         response.raise_for_status()
         return self
 
-    def enable(self):
+    def enable_cdn(self):
         """
         Enable a CDN site
         :return: a stackpath site object with the enabled cdn site
         """
-        response = self._client.post("{}/v1/stacks/{}/sites/{}/enable".format(self.base_api, self._parent_id, self.id))
+        response = self._client.post("{}/v1/stacks/{}/sites/{}/cdn".format(self.base_api, self._parent_id, self.id))
+        response.raise_for_status()
+        return self
+
+    def disable_waf(self):
+        """
+        Disable a WAF site
+        :return: a stackpath site object with the disabled waf site
+        """
+        response = self._client.delete("{}/v1/stacks/{}/sites/{}/waf".format(self.base_api, self._parent_id, self.id))
+        response.raise_for_status()
+        return self
+
+    def enable_waf(self):
+        """
+        Enable a WAF site
+        :return: a stackpath site object with the enabled waf site
+        """
+        response = self._client.post("{}/v1/stacks/{}/sites/{}/waf".format(self.base_api, self._parent_id, self.id))
+        response.raise_for_status()
+        return self
+
+    def disable_scripting(self):
+        """
+        Disable a SCRIPTING site
+        :return: a stackpath site object with the disabled scripting site
+        """
+        response = self._client.delete("{}/v1/stacks/{}/sites/{}/scripting".format(self.base_api, self._parent_id, self.id))
+        response.raise_for_status()
+        return self
+
+    def enable_scripting(self):
+        """
+        Enable a SCRIPTION site
+        :return: a stackpath site object with the enabled scripting site
+        """
+        response = self._client.post("{}/v1/stacks/{}/sites/{}/scripting".format(self.base_api, self._parent_id, self.id))
         response.raise_for_status()
         return self
