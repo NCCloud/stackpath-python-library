@@ -22,7 +22,7 @@ class BaseObject(object):
     _base_api = ""
 
     def __init__(self, client, parent_path: str = ""):
-        super(BaseSite, self).__init__(client, parent_id)
+        self._client = client
         self._base_api = parent_path
 
     @classmethod
