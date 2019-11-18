@@ -39,7 +39,7 @@ class DeliverySites(BaseSite):
         Disable a CDN site
         :return: a stackpath site object with the disabled cdn site
         """
-        response = self._client.delete("{}/v1/stacks/{}/sites/{}/cdn".format(self.base_api, self._parent_id, self.id))
+        response = self._client.delete(f"{self._base_api}/sites/{self.id}/cdn")
         response.raise_for_status()
         return self
 
@@ -48,7 +48,7 @@ class DeliverySites(BaseSite):
         Enable a CDN site
         :return: a stackpath site object with the enabled cdn site
         """
-        response = self._client.post("{}/v1/stacks/{}/sites/{}/cdn".format(self.base_api, self._parent_id, self.id))
+        response = self._client.post(f"{self._base_api}/sites/{self.id}/cdn")
         response.raise_for_status()
         return self
 
@@ -57,7 +57,7 @@ class DeliverySites(BaseSite):
         Disable a WAF site
         :return: a stackpath site object with the disabled waf site
         """
-        response = self._client.delete("{}/v1/stacks/{}/sites/{}/waf".format(self.base_api, self._parent_id, self.id))
+        response = self._client.delete(f"{self._base_api}/sites/{self.id}/waf")
         response.raise_for_status()
         return self
 
@@ -66,7 +66,7 @@ class DeliverySites(BaseSite):
         Enable a WAF site
         :return: a stackpath site object with the enabled waf site
         """
-        response = self._client.post("{}/v1/stacks/{}/sites/{}/waf".format(self.base_api, self._parent_id, self.id))
+        response = self._client.post(f"{self._base_api}/sites/{self.id}/waf")
         response.raise_for_status()
         return self
 
@@ -75,7 +75,7 @@ class DeliverySites(BaseSite):
         Disable a SCRIPTING site
         :return: a stackpath site object with the disabled scripting site
         """
-        response = self._client.delete("{}/v1/stacks/{}/sites/{}/scripting".format(self.base_api, self._parent_id, self.id))
+        response = self._client.delete(f"{self._base_api}/sites/{self.id}/scripting")
         response.raise_for_status()
         return self
 
@@ -84,6 +84,6 @@ class DeliverySites(BaseSite):
         Enable a SCRIPTING site
         :return: a stackpath site object with the enabled scripting site
         """
-        response = self._client.post("{}/v1/stacks/{}/sites/{}/scripting".format(self.base_api, self._parent_id, self.id))
+        response = self._client.post(f"{self._base_api}/sites/{self.id}/scripting")
         response.raise_for_status()
         return self

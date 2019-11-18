@@ -19,6 +19,7 @@ class PageInfo(object):
 
 class BaseObject(object):
     _client = None
+    _base_api = ""
 
     def __init__(self, client, parent_id=0):
         self._client = client
@@ -44,11 +45,13 @@ class BaseObject(object):
 
 
 class BaseSite(BaseObject):
-    base_api = "/delivery"
+    def __init__(self, client, parent_id=0):
+        super(BaseSite, self).__init__(client, parent_id)
+        self._base_api = f"/delivery/v1/stacks/{parent_id}"
 
     def index(self, first="", after="", filter="", sort_by=""):
         pagination = pagination_query(first=first, after=after, filter=filter, sort_by=sort_by)
-        response = self._client.get("{}/v1/stacks/{}/sites".format(self.base_api, self._parent_id), params=pagination)
+        response = self._client.get(f"{self._base_api}/sites", params=pagination)
         response.raise_for_status()
         items = []
         for item in response.json()["results"]:
@@ -58,7 +61,7 @@ class BaseSite(BaseObject):
         return {"results": items, "pageinfo": pageinfo}
 
     def get(self, site_id):
-        response = self._client.get("{}/v1/stacks/{}/sites/{}".format(self.base_api, self._parent_id, site_id))
+        response = self._client.get(f"{self._base_api}/sites/{site_id}")
         response.raise_for_status()
         return self.loaddict(response.json()["site"])
 
@@ -77,10 +80,7 @@ class BaseSite(BaseObject):
         List	features   A CDN site's associated features.
                            Features control how StackPath provisions and configures a site.
         """
-        response = self._client.post(
-            "{}/v1/stacks/{}/sites".format(self.base_api, self._parent_id),
-            json=payload
-        )
+        response = self._client.post(f"{self._base_api}/sites", json=payload)
         response.raise_for_status()
         return self.loaddict(response.json()["site"])
 
@@ -89,7 +89,7 @@ class BaseSite(BaseObject):
         Delete a CDN site
         :return: a stackpath site object with the deleted cdn site
         """
-        response = self._client.delete("{}/v1/stacks/{}/sites/{}".format(self.base_api, self._parent_id, self.id))
+        response = self._client.delete(f"{self._base_api}/sites/{self.id}")
         response.raise_for_status()
         return self
 
