@@ -1,6 +1,7 @@
-from pystackpath.util import BaseSite
 from pystackpath.stacks.cdnsites.scopes import Scopes
 from pystackpath.stacks.certificates import Certificates
+from pystackpath.util import BaseSite
+
 
 class CdnSites(BaseSite):
     def index(self, first="", after="", filter="", sort_by=""):
