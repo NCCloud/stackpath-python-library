@@ -1,6 +1,6 @@
 from pystackpath.util import BaseSite
 from pystackpath.stacks.cdnsites.scopes import Scopes
-
+from pystackpath.stacks.certificates import Certificates
 
 class CdnSites(BaseSite):
     def index(self, first="", after="", filter="", sort_by=""):
@@ -58,6 +58,17 @@ class CdnSites(BaseSite):
         response = self._client.post(f"{self._base_api}/sites/{self.id}/enable")
         response.raise_for_status()
         return self
+
+    def assign_certificate(self, certificate: Certificates):
+        """
+        Assign (and eventually force) a Certificate for the current Site.
+        :param certificate:
+        :return:
+        """
+        response = self._client.put(f"{self._base_api}/sites/{self.id}/certificates/{certificate.id}")
+        response.raise_for_status()
+
+        return self.loaddict(response.json()["siteCertificate"]["certificate"])
 
     def scopes(self):
         return Scopes(self._client, f"{self._base_api}/sites/{self.id}")
