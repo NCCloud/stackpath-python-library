@@ -69,7 +69,7 @@ class CdnSites(BaseSite):
         response = self._client.put(f"{self._base_api}/sites/{self.id}/certificates/{certificate.id}")
         response.raise_for_status()
 
-        return self.loaddict(response.json()["siteCertificate"]["certificate"])
+        return Certificates(self._client, f"{self._base_api}/certificates").loaddict(response.json()["siteCertificate"]["certificate"])
 
     def scopes(self):
         return Scopes(self._client, f"{self._base_api}/sites/{self.id}")
