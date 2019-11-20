@@ -15,7 +15,7 @@ class Origins(BaseObject):
         """
         Create a new CDN origin
         :param payload: dict according to https://stackpath.dev/reference/configuration#connectscopetoorigin
-        :return: dict with created site
+        :return: dict with requested origin
         String	id         An origin's unique identifier.
         String	path       An origin's path.
         String	hostname   An origin's hostname or IP address.
