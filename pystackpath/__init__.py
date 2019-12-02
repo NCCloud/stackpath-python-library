@@ -7,7 +7,7 @@ from .config import BASE_URL
 def check_for_errors(resp, *args, **kwargs):
     """Raises stored :class:`HTTPError`, if one occurred."""
 
-    http_error_msg = ''
+    http_error_msg = {}
     if isinstance(resp.reason, bytes):
         # We attempt to decode utf-8 first because some servers
         # choose to localize their reason strings. If the string
@@ -25,15 +25,16 @@ def check_for_errors(resp, *args, **kwargs):
     except Exception:
         response_obj = {"text": resp.text}
 
-    error = {
-        "status_code": resp.status_code,
-        "url": resp.url,
-        "reason": reason,
-        "content": response_obj
-    }
+    if 400 <= resp.status_code < 600:
+        http_error_msg = {
+            "status_code": resp.status_code,
+            "url": resp.url,
+            "reason": reason,
+            "content": response_obj
+        }
 
     if http_error_msg:
-        raise HTTPError(error, response=resp)
+        raise HTTPError(http_error_msg, response=resp)
 
 
 class OAuth2Session(Session):
