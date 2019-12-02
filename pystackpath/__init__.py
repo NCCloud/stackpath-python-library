@@ -70,7 +70,7 @@ class OAuth2Session(Session):
         if not "response" in kwargs["hooks"]:
             kwargs["hooks"]["response"] = list()
 
-        kwargs["hooks"]["response"].append(self._custom_hooks)
+        kwargs["hooks"]["response"] = kwargs["hooks"]["response"] + self._custom_hooks
 
         return kwargs
 
