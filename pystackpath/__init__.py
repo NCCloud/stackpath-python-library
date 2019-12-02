@@ -65,14 +65,12 @@ class OAuth2Session(Session):
         return kwargs
 
     def _add_hooks(self, kwargs):
-        if not "headers" in kwargs:
-            kwargs["headers"] = dict()
-        if not "hooks" in kwargs["headers"]:
-            kwargs["headers"]["hooks"] = dict()
-        if not "response" in kwargs["headers"]["hooks"]:
-            kwargs["headers"]["hooks"]["response"] = list()
+        if not "hooks" in kwargs:
+            kwargs["hooks"] = dict()
+        if not "response" in kwargs["hooks"]:
+            kwargs["hooks"]["response"] = list()
 
-        kwargs["headers"]["hooks"]["response"].append(self._custom_hooks)
+        kwargs["hooks"]["response"].append(self._custom_hooks)
 
         return kwargs
 
