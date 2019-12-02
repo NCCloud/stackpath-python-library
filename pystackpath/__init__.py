@@ -78,10 +78,12 @@ class OAuth2Session(Session):
 
     def request(self, method, url, **kwargs):
         kwargs = self._add_auth(kwargs)
+        kwargs = self._add_hooks(kwargs)
         response = super(OAuth2Session, self).request(method, BASE_URL + url, **kwargs)
         if response.status_code == 401:
             self._refresh_token()
             kwargs = self._add_auth(kwargs)
+            kwargs = self._add_hooks(kwargs)
             response = super(OAuth2Session, self).request(method, BASE_URL + url, **kwargs)
         return response
 
