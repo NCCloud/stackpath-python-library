@@ -38,9 +38,10 @@ def check_for_errors(resp, *args, **kwargs):
 
 
 class OAuth2Session(Session):
-    def __init__(self, clientid, apisecret):
+    def __init__(self, clientid, apisecret, custom_hooks: list = [check_for_errors]):
         self._clientid = clientid
         self._apisecret = apisecret
+        self._custom_hooks = custom_hooks
         self._token = ""
 
         super(OAuth2Session, self).__init__()
@@ -66,7 +67,13 @@ class OAuth2Session(Session):
     def _add_hooks(self, kwargs):
         if not "headers" in kwargs:
             kwargs["headers"] = dict()
-        kwargs["headers"]["hooks"] = {'response': check_for_errors}
+        if not "hooks" in kwargs["headers"]:
+            kwargs["headers"]["hooks"] = dict()
+        if not "response" in kwargs["headers"]["hooks"]:
+            kwargs["headers"]["hooks"]["response"] = list()
+
+        kwargs["headers"]["hooks"]["response"].append(self._custom_hooks)
+
         return kwargs
 
     def request(self, method, url, **kwargs):
@@ -85,13 +92,13 @@ class Stackpath(object):
 
     client = None
 
-    def __init__(self, clientid, apisecret):
+    def __init__(self, clientid, apisecret, custom_hooks: list = [check_for_errors]):
         self._clientid = clientid
         self._apisecret = apisecret
-        self._init_client()
+        self._init_client(custom_hooks)
 
-    def _init_client(self):
-        self.client = OAuth2Session(self._clientid, self._apisecret)
+    def _init_client(self, custom_hooks):
+        self.client = OAuth2Session(self._clientid, self._apisecret, custom_hooks=custom_hooks)
 
     def stacks(self):
         return Stacks(self.client)
