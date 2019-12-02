@@ -20,12 +20,12 @@ def check_for_errors(resp, *args, **kwargs):
     else:
         reason = resp.reason
 
-    try:
-        response_obj = resp.json()
-    except Exception:
-        response_obj = {"text": resp.text}
+    if resp.status_code != 401 and 400 <= resp.status_code < 600:
+        try:
+            response_obj = resp.json()
+        except Exception:
+            response_obj = {"text": resp.text}
 
-    if 400 <= resp.status_code < 600:
         http_error_msg = {
             "status_code": resp.status_code,
             "url": resp.url,
