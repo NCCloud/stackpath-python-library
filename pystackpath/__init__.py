@@ -4,41 +4,8 @@ from .stacks import Stacks
 from .config import BASE_URL
 
 
-def check_for_errors(resp, *args, **kwargs):
-    """Raises stored :class:`HTTPError`, if one occurred."""
-
-    http_error_msg = {}
-    if isinstance(resp.reason, bytes):
-        # We attempt to decode utf-8 first because some servers
-        # choose to localize their reason strings. If the string
-        # isn't utf-8, we fall back to iso-8859-1 for all other
-        # encodings. (See PR #3538)
-        try:
-            reason = resp.reason.decode('utf-8')
-        except UnicodeDecodeError:
-            reason = resp.reason.decode('iso-8859-1')
-    else:
-        reason = resp.reason
-
-    if resp.status_code != 401 and 400 <= resp.status_code < 600:
-        try:
-            response_obj = resp.json()
-        except Exception:
-            response_obj = {"text": resp.text}
-
-        http_error_msg = {
-            "status_code": resp.status_code,
-            "url": resp.url,
-            "reason": reason,
-            "content": response_obj
-        }
-
-    if http_error_msg:
-        raise HTTPError(http_error_msg, response=resp)
-
-
 class OAuth2Session(Session):
-    def __init__(self, clientid, apisecret, custom_hooks: list = [check_for_errors]):
+    def __init__(self, clientid, apisecret, custom_hooks: list = []):
         self._clientid = clientid
         self._apisecret = apisecret
         self._custom_hooks = custom_hooks
@@ -65,12 +32,13 @@ class OAuth2Session(Session):
         return kwargs
 
     def _add_hooks(self, kwargs):
-        if not "hooks" in kwargs:
-            kwargs["hooks"] = dict()
-        if not "response" in kwargs["hooks"]:
-            kwargs["hooks"]["response"] = list()
+        if self._custom_hooks:
+            if not "hooks" in kwargs:
+                kwargs["hooks"] = dict()
+            if not "response" in kwargs["hooks"]:
+                kwargs["hooks"]["response"] = list()
 
-        kwargs["hooks"]["response"] = kwargs["hooks"]["response"] + self._custom_hooks
+            kwargs["hooks"]["response"] = kwargs["hooks"]["response"] + self._custom_hooks
 
         return kwargs
 
@@ -92,7 +60,7 @@ class Stackpath(object):
 
     client = None
 
-    def __init__(self, clientid, apisecret, custom_hooks: list = [check_for_errors]):
+    def __init__(self, clientid, apisecret, custom_hooks: list = []):
         self._clientid = clientid
         self._apisecret = apisecret
         self._init_client(custom_hooks)
