@@ -1,7 +1,39 @@
-from requests import Session
+from requests import Session, HTTPError
 
 from .stacks import Stacks
 from .config import BASE_URL
+
+
+def check_for_errors(resp, *args, **kwargs):
+    """Raises stored :class:`HTTPError`, if one occurred."""
+
+    http_error_msg = ''
+    if isinstance(resp.reason, bytes):
+        # We attempt to decode utf-8 first because some servers
+        # choose to localize their reason strings. If the string
+        # isn't utf-8, we fall back to iso-8859-1 for all other
+        # encodings. (See PR #3538)
+        try:
+            reason = resp.reason.decode('utf-8')
+        except UnicodeDecodeError:
+            reason = resp.reason.decode('iso-8859-1')
+    else:
+        reason = resp.reason
+
+    try:
+        response_obj = resp.json()
+    except Exception:
+        response_obj = {"text": resp.text}
+
+    error = {
+        "status_code": resp.status_code,
+        "url": resp.url,
+        "reason": reason,
+        "content": response_obj
+    }
+
+    if http_error_msg:
+        raise HTTPError(error, response=resp)
 
 
 class OAuth2Session(Session):
@@ -28,6 +60,12 @@ class OAuth2Session(Session):
         if not "headers" in kwargs:
             kwargs["headers"] = dict()
         kwargs["headers"]["Authorization"] = "Bearer %s" % self._token
+        return kwargs
+
+    def _add_hooks(self, kwargs):
+        if not "headers" in kwargs:
+            kwargs["headers"] = dict()
+        kwargs["headers"]["hooks"] = {'response': check_for_errors}
         return kwargs
 
     def request(self, method, url, **kwargs):
