@@ -65,3 +65,7 @@ class CdnSites(BaseSite):
 
     def scopes(self):
         return Scopes(self._client, f"{self._base_api}/sites/{self.id}")
+
+    def targets(self):
+        response = self._client.get(f"{self._base_api}/sites/{self.id}/dns/targets")
+        return response.json()["addresses"]
