@@ -4,6 +4,10 @@ from .stacks import Stacks
 from .config import BASE_URL
 
 
+class APIError(Exception):
+    pass
+
+
 class OAuth2Session(Session):
     def __init__(self, clientid, apisecret, custom_hooks: list = []):
         self._clientid = clientid
@@ -51,6 +55,9 @@ class OAuth2Session(Session):
             kwargs = self._add_auth(kwargs)
             kwargs = self._add_hooks(kwargs)
             response = super(OAuth2Session, self).request(method, BASE_URL + url, **kwargs)
+        if response.status_code >= 400:
+            data = response.json()
+            raise APIError(data.get('message', 'Unknown error'))
         return response
 
 
