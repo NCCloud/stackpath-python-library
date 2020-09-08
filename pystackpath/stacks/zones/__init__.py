@@ -1,5 +1,4 @@
-from pystackpath.stacks.cdnsites.scopes import Scopes
-from pystackpath.stacks.certificates import Certificates
+from pystackpath.stacks.zones.records import Records
 from pystackpath.util import BaseObject, pagination_query, PageInfo
 
 
@@ -91,3 +90,7 @@ class Zones(BaseObject):
         """
         response = self._client.put(f"{self._base_api}/zones/{self.id}", json={'labels': labels})
         return self.loaddict(response.json()["zone"])
+
+
+    def records(self):
+        return Records(self._client,  f"{self._base_api}/zones/{self.id}")
